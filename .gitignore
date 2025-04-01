@@ -1,0 +1,4 @@
+.vercel
+/node_modules
+google-credentials.json
+.env
