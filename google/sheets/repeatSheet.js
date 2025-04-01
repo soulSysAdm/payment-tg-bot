@@ -29,7 +29,7 @@ const setRedisData = async (redisData) => {
 
 export async function repeatSheet() {
   const sheetData = await readSheet()
-
+  console.log('sheetData ', sheetData)
   const dataByAlert = getDataByAlertRequest(sheetData)
   console.log('dataByAlert ', dataByAlert)
   return Promise.resolve()
