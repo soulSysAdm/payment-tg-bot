@@ -31,6 +31,8 @@ export async function repeatSheet() {
   const sheetData = await readSheet()
 
   const dataByAlert = getDataByAlertRequest(sheetData)
+  console.log('dataByAlert ', dataByAlert)
+  return Promise.resolve()
   if (!dataByAlert.length) {
     for (const chatId of allowedUsers) {
       await sendTelegramMessage(chatId, `Ближайшие 3 дня нет проплат`)
