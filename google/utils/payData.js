@@ -26,7 +26,6 @@ import {
   getNextPayment,
 } from '../../assets/dateFormat.js'
 import { getRangeCell } from './rangeCell.js'
-import { updateMultipleSpecificCells } from '../sheets/updateSheet.js'
 import {alertDay} from "../../globals/index.js";
 
 const getFilteredDataByPay = (data) => {
