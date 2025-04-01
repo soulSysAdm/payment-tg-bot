@@ -1,4 +1,9 @@
-import { readSheet } from '../index.js'
+import {
+  getDataByPayRequest,
+  getDataByPendingRequest,
+  getDataSheetPay,
+  readSheet,
+} from '../index.js'
 import { setSheetData } from '../../local/index.js'
 import { getDataByAlertRequest } from '../utils/payData.js'
 import { getDataSheetPending } from '../utils/rangeCell.js'
@@ -7,7 +12,7 @@ import {
   getDataMessagesPending,
   sendTelegramMessage,
 } from '../../telegram/index.js'
-import { allowedUsers } from '../../globals/index.js'
+import { alertDay, allowedUsers } from '../../globals/index.js'
 import { delaySeconds } from '../../assets/dateFormat.js'
 import {
   CHAT_ID_KEY,
@@ -27,48 +32,63 @@ const setRedisData = async (redisData) => {
   }
 }
 
-export async function repeatSheet() {
-  const sheetData = await readSheet()
-  console.log('sheetData ', sheetData)
-  const dataByAlert = getDataByAlertRequest(sheetData)
-  console.log('dataByAlert ', dataByAlert)
-  return Promise.resolve()
-  if (!dataByAlert.length) {
-    for (const chatId of allowedUsers) {
-      await sendTelegramMessage(chatId, `Ближайшие 3 дня нет проплат`)
-    }
-    return Promise.resolve()
+const sendTelegramMessageByPending = async (dataPending) => {
+  let message = ''
+  if (dataPending.length > 0) {
+    message = `Ближайшие "${alertDay}" дня Есть **${dataPending.length}** запросов в ожидании. Дополнительных запросов Нет!`
   } else {
-    const dataByAlertSheet = getDataSheetPending(dataByAlert)
-    const telegramMessages = getDataMessagesPending(dataByAlert)
-    const redisData = {}
-    for (const message of telegramMessages) {
-      for (const chatId of allowedUsers) {
-        const messageId = await sendTelegramMessage(chatId, message[TEXT_KEY], {
-          [INLINE_KEYBOARD_KEY]: message[INLINE_KEYBOARD_KEY],
-        })
-        if (messageId) {
-          const redisKey = `${REDIS_PAYMENT_PART_KEY}_${message[ID_KEY]}`
+    message = `Ближайшие "${alertDay}" дня Нет запросов в ожидании. Дополнительных запросов на проплату Нет!`
+  }
+  for (const chatId of allowedUsers) {
+    await sendTelegramMessage(chatId, message)
+  }
+}
 
-          if (!redisData[redisKey]) {
-            redisData[redisKey] = []
-          }
+const sendTelegramMessageByRequest = async (dataByAlert) => {
+  const telegramMessages = getDataMessagesPending(dataByAlert)
+  const redisData = {}
+  for (const message of telegramMessages) {
+    for (const chatId of allowedUsers) {
+      const messageId = await sendTelegramMessage(chatId, message[TEXT_KEY], {
+        [INLINE_KEYBOARD_KEY]: message[INLINE_KEYBOARD_KEY],
+      })
+      if (messageId) {
+        const redisKey = `${REDIS_PAYMENT_PART_KEY}_${message[ID_KEY]}`
 
-          redisData[redisKey].push(
-            JSON.stringify({
-              [CHAT_ID_KEY]: chatId,
-              [MESSAGE_ID_KEY]: messageId,
-            }),
-          )
-          await delaySeconds(0.1)
+        if (!redisData[redisKey]) {
+          redisData[redisKey] = []
         }
+
+        redisData[redisKey].push(
+          JSON.stringify({
+            [CHAT_ID_KEY]: chatId,
+            [MESSAGE_ID_KEY]: messageId,
+          }),
+        )
+        await delaySeconds(0.1)
       }
     }
-
-    await setRedisData(redisData)
-    await updateMultipleSpecificCells(dataByAlertSheet)
-    return Promise.resolve()
   }
+
+  await setRedisData(redisData)
+}
+
+export async function repeatSheet() {
+  const sheetData = await readSheet()
+  const dataByAlert = getDataByAlertRequest(sheetData)
+  const dataPending = getDataByPendingRequest(sheetData)
+  const dataByPay = getDataByPayRequest(sheetData)
+  if (!dataByAlert.length) {
+    await sendTelegramMessageByPending(dataPending)
+  } else {
+    await sendTelegramMessageByRequest(dataByAlert)
+  }
+
+  const dataByAlertSheet = getDataSheetPending(dataByAlert)
+  const dataByPaySheet = getDataSheetPay(dataByPay)
+  const dataRequestSheet = [...dataByAlertSheet, dataByPaySheet]
+
+  await updateMultipleSpecificCells(dataRequestSheet)
 }
 
 // console.log('📥 Запрос от Google Apps Script:', getTimeInUkraine())

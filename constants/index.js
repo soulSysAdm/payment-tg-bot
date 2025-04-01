@@ -13,6 +13,7 @@ export const COST_KEY = 'cost'
 export const PAY_KEY = 'pay'
 export const IS_PENDING_KEY = 'is_pending'
 export const COMMENTS_KEY = 'comments'
+export const NICKNAME_ANSWERABLE_KEY = 'nickname_answerable'
 
 //Keys additional xlsx
 export const ID_KEY = 'id'
@@ -32,6 +33,7 @@ export const EVERY_YEAR_D1_TYPE_KEY = 'каждый год -1 день'
 export const EVERY_YEAR_I1_TYPE_KEY = 'каждый год +1 день'
 export const EVERY_YEAR_D2_TYPE_KEY = 'каждый год -2 дня'
 export const EVERY_YEAR_I2_TYPE_KEY = 'каждый год +2 дня'
+export const EVERY_6_MONTH_TYPE_KEY = 'каждые 6 месяцев'
 export const BY_REQUEST_TYPE_KEY = 'по запросу'
 
 export const TRUE_TYPE_KEY = 'true'

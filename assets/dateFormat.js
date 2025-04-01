@@ -14,6 +14,7 @@ import {
   EVERY_YEAR_TYPE_KEY,
   PAY_REPEAT_KEY,
   LAST_DATE_PAYMENT_KEY,
+  EVERY_6_MONTH_TYPE_KEY,
 } from '../constants/index.js'
 import { daysPayment } from '../globals/index.js'
 
@@ -95,90 +96,37 @@ const getOffsetPaymentDayByYear = (payRepeat) => {
   }
 }
 
-const getNextPaymentByMonth = ({ lastDatePayment, payRepeat, isRepeat }) => {
+const getNextPaymentByMonth = ({ lastDatePayment, payRepeat }) => {
   const start = moment(lastDatePayment)
   let nextDate = start.clone()
 
-  // const now = moment().subtract(reminderForDay, 'days')
-  const now = moment()
   const offsetPaymentDay = getOffsetPaymentDayByMonth(payRepeat)
 
-  const maxIterations = 240
-
-  let i = 0
-
   if (payRepeat === EVERY_30_DAYS_TYPE_KEY) {
-    while (nextDate.isBefore(now) && i < maxIterations) {
-      nextDate = nextDate.clone().add(30, 'days').subtract(0, 'days')
-      i++
-    }
-    if (isRepeat)
-      nextDate = nextDate.clone().add(30, 'days').subtract(0, 'days')
+    nextDate = nextDate.clone().add(30, 'days').subtract(0, 'days')
+  } else if (payRepeat === EVERY_6_MONTH_TYPE_KEY) {
+    nextDate = nextDate
+      .clone()
+      .add(6, 'month')
+      .subtract(offsetPaymentDay, 'days')
   } else {
-    while (nextDate.isBefore(now) && i < maxIterations) {
-      nextDate = nextDate
-        .clone()
-        .add(1, 'month')
-        .subtract(offsetPaymentDay, 'days')
-      i++
-    }
-    if (isRepeat)
-      nextDate = nextDate
-        .clone()
-        .add(1, 'month')
-        .subtract(offsetPaymentDay, 'days')
+    nextDate = nextDate
+      .clone()
+      .add(1, 'month')
+      .subtract(offsetPaymentDay, 'days')
   }
 
-  const nextDatePayment = nextDate.format()
-  const daysUntilPayment = getDaysFromToday(nextDatePayment)
-  const nextDateRequest = getClosestValidDate(nextDatePayment)
-  const daysUntilRequest = getDaysFromToday(nextDateRequest)
-
-  return {
-    lastDatePayment,
-    nextDatePayment,
-    nextDateRequest,
-    daysUntilPayment,
-    daysUntilRequest,
-  }
+  return nextDate.format()
 }
 
-const getNextPaymentByYear = ({ lastDatePayment, payRepeat, isRepeat }) => {
+const getNextPaymentByYear = ({ lastDatePayment, payRepeat }) => {
   const start = moment(lastDatePayment)
   let nextDate = start.clone()
-
-  const now = moment()
-  // const now = moment().subtract(reminderForDay, 'days')
   const offsetPaymentDay = getOffsetPaymentDayByYear(payRepeat)
-  const maxIterations = 240
 
-  let i = 0
-  while (nextDate.isBefore(now) && i < maxIterations) {
-    nextDate = nextDate
-      .clone()
-      .add(1, 'year')
-      .subtract(offsetPaymentDay, 'days')
-    i++
-  }
+  nextDate = nextDate.clone().add(1, 'year').subtract(offsetPaymentDay, 'days')
 
-  if (isRepeat)
-    nextDate = nextDate
-      .clone()
-      .add(1, 'year')
-      .subtract(offsetPaymentDay, 'days')
-
-  const nextDatePayment = nextDate.format()
-  const daysUntilPayment = getDaysFromToday(nextDatePayment)
-  const nextDateRequest = getClosestValidDate(nextDatePayment)
-  const daysUntilRequest = getDaysFromToday(nextDateRequest)
-
-  return {
-    lastDatePayment,
-    nextDatePayment,
-    nextDateRequest,
-    daysUntilPayment,
-    daysUntilRequest,
-  }
+  return nextDate.format()
 }
 
 const getIsEveryYear = (data, payRepeat) => {
@@ -211,6 +159,8 @@ const getIsEveryMonth = (data, payRepeat) => {
     case EVERY_MONTH_D2_TYPE_KEY:
       return true
     case EVERY_MONTH_I2_TYPE_KEY:
+      return true
+    case EVERY_6_MONTH_TYPE_KEY:
       return true
     default:
       return false
@@ -245,7 +195,7 @@ export const getNextDateFormatToLastDate = (date) => {
   return moment(date.split(',')[0], 'DD-MM-YYYY').format('DD-MM-YYYY')
 }
 
-export const getNextPayment = (data, isRepeat = false) => {
+export const getNextPayment = (data) => {
   const payRepeat = getValidateString(data?.[PAY_REPEAT_KEY])
     .toLowerCase()
     .trim()
@@ -257,17 +207,43 @@ export const getNextPayment = (data, isRepeat = false) => {
   if (!everyYear && !everyMonth) return 'Ничего не выбрано'
 
   if (!lastDatePayment) return 'Не указана дата начала оплаты'
+  let nextDatePayment = ''
   if (everyMonth) {
-    return getNextPaymentByMonth({
+    nextDatePayment = getNextPaymentByMonth({
       lastDatePayment,
       payRepeat,
-      isRepeat,
     })
   } else {
-    return getNextPaymentByYear({
+    nextDatePayment = getNextPaymentByYear({
       lastDatePayment,
       payRepeat,
-      isRepeat,
     })
   }
+
+  const daysUntilPayment = getDaysFromToday(nextDatePayment)
+  const nextDateRequest = getClosestValidDate(nextDatePayment)
+  const daysUntilRequest = getDaysFromToday(nextDateRequest)
+
+  return {
+    lastDatePayment,
+    nextDatePayment,
+    nextDateRequest,
+    daysUntilPayment,
+    daysUntilRequest,
+  }
+
+  //
+  // if (everyMonth) {
+  //   return getNextPaymentByMonth({
+  //     lastDatePayment,
+  //     payRepeat,
+  //     isNext,
+  //   })
+  // } else {
+  //   return getNextPaymentByYear({
+  //     lastDatePayment,
+  //     payRepeat,
+  //     isNext,
+  //   })
+  // }
 }
