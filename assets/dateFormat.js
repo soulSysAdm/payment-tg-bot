@@ -27,12 +27,12 @@ import {
 } from './validateData.js'
 
 export const getDisplayDateWithDay = (date) => {
-  if (!date) return '-'
+  if (!date) return ''
   return moment(date).tz('Europe/Kyiv').format('DD-MM-YYYY, dddd')
 }
 
 export const getDisplayDate = (date) => {
-  if (!date) return '-'
+  if (!date) return ''
   return moment(date).tz('Europe/Kyiv').format('DD-MM-YYYY')
 }
 
@@ -55,8 +55,8 @@ const getClosestValidDate = (dateStr) => {
 }
 
 const getDaysFromToday = (dateStr) => {
-  const target = moment(dateStr)
-  const today = moment()
+  const target = moment(dateStr).startOf('day')
+  const today = moment().startOf('day')
   return target.diff(today, 'days')
 }
 

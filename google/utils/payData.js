@@ -14,7 +14,6 @@ import {
   LAST_DATE_PAYMENT_KEY,
   NEXT_DATE_PAYMENT_KEY,
   NEXT_DATE_REQUEST_KEY,
-  NICKNAME_ANSWERABLE_KEY,
   PAY_KEY,
   RANGE_KEY,
   TRUE_TYPE_KEY,
@@ -27,32 +26,16 @@ import {
   getNextPayment,
 } from '../../assets/dateFormat.js'
 import { getRangeCell } from './rangeCell.js'
-import { updateMultipleSpecificCells } from '../sheets/updateSheet.js'
-import { alertDay } from '../../globals/index.js'
-
-const getCorrectNickname = (nickname) => {
-  const stringNickname = getValidateString(nickname).trim()
-  if (stringNickname.length <= 1) return 'Неизвестно'
-  return stringNickname.startsWith('@') ? stringNickname : '@' + stringNickname
-}
+import {alertDay} from "../../globals/index.js";
 
 const getFilteredDataByPay = (data) => {
   const dataArray = getValidateArray(data)
-
-  return dataArray
-
-    .filter(
-      (item) =>
-        getValidateString(item?.[PAY_KEY]).trim().toLowerCase() ===
-          TRUE_TYPE_KEY &&
-        getValidateString(item?.[LAST_DATE_PAYMENT_KEY]).trim(),
-    )
-    .map((item) => ({
-      ...item,
-      [NICKNAME_ANSWERABLE_KEY]: getCorrectNickname(
-        item?.[NICKNAME_ANSWERABLE_KEY],
-      ),
-    }))
+  return dataArray.filter(
+    (item) =>
+      getValidateString(item?.[PAY_KEY]).trim().toLowerCase() ===
+        getValidateString(TRUE_TYPE_KEY).trim().toLowerCase() &&
+      getValidateString(item?.[LAST_DATE_PAYMENT_KEY]).trim(),
+  )
 }
 
 export const getInitialDataByAllDate = (data) => {
@@ -91,11 +74,11 @@ export const getDataByAllDate = (data) => {
 
     return {
       ...item,
-      [NEXT_DATE_PAYMENT_KEY]: nextDatePayment || '',
-      [NEXT_DATE_REQUEST_KEY]: nextDateRequest || '',
-      [DAYS_UNTIL_PAYMENT_KEY]: daysUntilPayment ?? -1,
-      [DAYS_UNTIL_REQUEST_KEY]: daysUntilRequest ?? -1,
-      [LAST_DATE_PAYMENT_KEY]: lastDatePayment || '',
+      [NEXT_DATE_PAYMENT_KEY]: nextDatePayment,
+      [NEXT_DATE_REQUEST_KEY]: nextDateRequest,
+      [DAYS_UNTIL_PAYMENT_KEY]: daysUntilPayment,
+      [DAYS_UNTIL_REQUEST_KEY]: daysUntilRequest,
+      [LAST_DATE_PAYMENT_KEY]: lastDatePayment,
     }
   })
 }
@@ -104,16 +87,9 @@ const getLowerCase = (value) => {
   return getValidateString(value).trim().toLowerCase()
 }
 
-const getIsPendingOrCancel = (pendingStr) => {
+const getIsPending = (pendingStr) => {
   const pendingLower = getLowerCase(pendingStr)
   if (pendingLower === getLowerCase(TRUE_TYPE_KEY)) return true
-  if (pendingLower === getLowerCase(CANCEL_PAY_TYPE_KEY)) return true
-  if (pendingLower === getLowerCase(CANCEL_PAID_TYPE_KEY)) return true
-  return false
-}
-
-const getIsCancel = (pendingStr) => {
-  const pendingLower = getLowerCase(pendingStr)
   if (pendingLower === getLowerCase(CANCEL_PAY_TYPE_KEY)) return true
   if (pendingLower === getLowerCase(CANCEL_PAID_TYPE_KEY)) return true
   return false
@@ -124,20 +100,7 @@ export const getDataByAlertRequest = (data) => {
   return dataByAllDate.filter(
     (item) =>
       item?.[DAYS_UNTIL_PAYMENT_KEY] <= alertDay &&
-      !getIsPendingOrCancel(item?.[IS_PENDING_KEY]),
-  )
-}
-
-export const getDataByPayRequest = (data) => {
-  const dataByAllDate = getDataByAllDate(data)
-  return dataByAllDate.filter((item) => !getIsCancel(item?.[IS_PENDING_KEY]))
-}
-
-export const getDataByPendingRequest = (data) => {
-  const dataByAllDate = getDataByAllDate(data)
-  return dataByAllDate.filter(
-    (item) =>
-      getLowerCase(item?.[IS_PENDING_KEY]) === getLowerCase(TRUE_TYPE_KEY),
+      !getIsPending(item?.[IS_PENDING_KEY]),
   )
 }
 
@@ -189,17 +152,25 @@ export const getSheetDataByPaidClick = (sheetData, id, comment) => {
   const findIndex = getFindIndexClick(sheetData, id)
   if (findIndex !== -1) {
     const currentData = sheetData[findIndex]
+    console.log('BEFORE ', currentData[LAST_DATE_PAYMENT_KEY])
     currentData[LAST_DATE_PAYMENT_KEY] = getNextDateFormatToLastDate(
       currentData[NEXT_DATE_PAYMENT_KEY],
     )
+    console.log('AFTER ', currentData[LAST_DATE_PAYMENT_KEY])
     const {
       nextDatePayment,
       daysUntilPayment,
       daysUntilRequest,
       nextDateRequest,
       lastDatePayment,
-    } = getNextPayment(currentData)
-
+    } = getNextPayment(currentData, true)
+    console.log(
+      nextDatePayment,
+      daysUntilPayment,
+      daysUntilRequest,
+      nextDateRequest,
+      lastDatePayment,
+    )
     return [
       {
         [RANGE_KEY]: getRangeCell(currentData, COMMENTS_KEY),

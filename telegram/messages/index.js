@@ -7,7 +7,7 @@ import {
   ID_KEY,
   INLINE_KEYBOARD_KEY,
   LOGIN_KEY,
-  NAME_KEY,
+  NAME_KEY, NEXT_DATE_PAYMENT_KEY,
   NICKNAME_ANSWERABLE_KEY,
   PAY_PART_KEY,
   TEXT_KEY,
@@ -24,7 +24,7 @@ import { getValidateNumber } from '../../assets/validateData.js'
 
 export const getDataMessagesPending = (data) => {
   return data.map((item) => {
-    const text = `🦆 Утка/Гусь :) ${item?.[NICKNAME_ANSWERABLE_KEY]}\n💳 Проплата: ${item?.[NAME_KEY]}\nСумма: ${item?.[COST_KEY]}\nЛогин: ${item?.[LOGIN_KEY]}\nОсталось дней до запроса: ${item?.[DAYS_UNTIL_REQUEST_KEY]}\nОсталось дней до проплаты: ${item?.[DAYS_UNTIL_PAYMENT_KEY]}`
+    const text = `🦆 Утка/Гусь :) ${item?.[NICKNAME_ANSWERABLE_KEY]}\n💳 Проплата: ${item?.[NAME_KEY]}\n🪙 Сумма: ${item?.[COST_KEY]}\nЛогин: ${item?.[LOGIN_KEY]}\nОсталось дней до запроса: ${item?.[DAYS_UNTIL_REQUEST_KEY]}\nОсталось дней до проплаты: ${item?.[DAYS_UNTIL_PAYMENT_KEY]}\n🏂 Следующая проплата: ${item?.[NEXT_DATE_PAYMENT_KEY]}`
     const id = getValidateNumber(item?.[ID_KEY])
     const idPay = PAY_PART_KEY + '_' + id
     const idCancelPay = CANCEL_PAY_PART_KEY + '_' + id
