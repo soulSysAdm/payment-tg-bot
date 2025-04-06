@@ -69,7 +69,9 @@ export const getDaysRequestFromToday = (dateStr) => {
   const step = diffDays >= 0 ? 1 : -1
 
   for (let i = 1; i < Math.abs(diffDays); i++) {
-    const current = moment(today).tz('Europe/Kyiv').add(i * step, 'days')
+    const current = moment(today)
+      .tz('Europe/Kyiv')
+      .add(i * step, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {
       count += step
@@ -249,19 +251,4 @@ export const getNextPayment = (data) => {
     daysUntilPayment,
     daysUntilRequest,
   }
-
-  //
-  // if (everyMonth) {
-  //   return getNextPaymentByMonth({
-  //     lastDatePayment,
-  //     payRepeat,
-  //     isNext,
-  //   })
-  // } else {
-  //   return getNextPaymentByYear({
-  //     lastDatePayment,
-  //     payRepeat,
-  //     isNext,
-  //   })
-  // }
 }
