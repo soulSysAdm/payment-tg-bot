@@ -47,7 +47,7 @@ export const delaySeconds = (second) => {
 }
 
 const getClosestValidDate = (dateStr) => {
-  let date = moment(dateStr)
+  let date = moment(dateStr).tz('Europe/Kyiv')
   while (!daysPayment.includes(date.day())) {
     date = date.subtract(1, 'day')
   }
@@ -69,7 +69,7 @@ export const getDaysRequestFromToday = (dateStr) => {
   const step = diffDays >= 0 ? 1 : -1
 
   for (let i = 1; i < Math.abs(diffDays); i++) {
-    const current = moment(today).add(i * step, 'days')
+    const current = moment(today).tz('Europe/Kyiv').add(i * step, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {
       count += step
