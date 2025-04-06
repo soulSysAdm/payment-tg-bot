@@ -54,15 +54,15 @@ const getClosestValidDate = (dateStr) => {
   return date.format()
 }
 
-const getDaysFromToday = (dateStr) => {
-  const target = moment(dateStr).startOf('day')
-  const today = moment().startOf('day')
+export const getDaysFromToday = (dateStr) => {
+  const target = moment(dateStr).tz('Europe/Kyiv').startOf('day')
+  const today = moment().tz('Europe/Kyiv').startOf('day')
   return target.diff(today, 'days')
 }
 
-const getDaysRequestFromToday = (dateStr) => {
-  const target = moment(dateStr).startOf('day')
-  const today = moment().startOf('day')
+export const getDaysRequestFromToday = (dateStr) => {
+  const target = moment(dateStr).tz('Europe/Kyiv').startOf('day')
+  const today = moment().tz('Europe/Kyiv').startOf('day')
   const diffDays = target.diff(today, 'days')
   let count = 0
 
