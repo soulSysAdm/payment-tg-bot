@@ -68,7 +68,7 @@ const getDaysRequestFromToday = (dateStr) => {
 
   const step = diffDays >= 0 ? 1 : -1
 
-  for (let i = 1; i <= Math.abs(diffDays); i++) {
+  for (let i = 1; i < Math.abs(diffDays); i++) {
     const current = moment(today).add(i * step, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {
@@ -204,7 +204,7 @@ export const getDateByUnknownFormat = (date) => {
     'YYYY/MM/DD',
   ]
 
-  const parsed = moment(date, formats, true)
+  const parsed = moment.tz(date, formats, true, 'Europe/Kyiv')
 
   return parsed.isValid() ? parsed.format() : null
 }
