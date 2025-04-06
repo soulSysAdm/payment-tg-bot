@@ -60,6 +60,24 @@ const getDaysFromToday = (dateStr) => {
   return target.diff(today, 'days')
 }
 
+const getDaysRequestFromToday = (dateStr) => {
+  const target = moment(dateStr).startOf('day')
+  const today = moment().startOf('day')
+  const diffDays = target.diff(today, 'days')
+  let count = 0
+
+  const step = diffDays >= 0 ? 1 : -1
+
+  for (let i = 1; i <= Math.abs(diffDays); i++) {
+    const current = moment(today).add(i * step, 'days')
+    const weekday = current.isoWeekday() // Пн=1, Вс=7
+    if (daysPayment.includes(weekday)) {
+      count += step
+    }
+  }
+  return count
+}
+
 const getOffsetPaymentDayByMonth = (payRepeat) => {
   switch (payRepeat) {
     case EVERY_30_DAYS_TYPE_KEY:
@@ -222,7 +240,7 @@ export const getNextPayment = (data) => {
 
   const daysUntilPayment = getDaysFromToday(nextDatePayment)
   const nextDateRequest = getClosestValidDate(nextDatePayment)
-  const daysUntilRequest = getDaysFromToday(nextDateRequest)
+  const daysUntilRequest = getDaysRequestFromToday(nextDateRequest)
 
   return {
     lastDatePayment,
