@@ -68,7 +68,7 @@ export const getDaysRequestFromToday = (dateStr) => {
 
   const step = diffDays >= 0 ? 1 : -1
 
-  for (let i = 1; i <= Math.abs(diffDays); i++) {
+  for (let i = 1; i < Math.abs(diffDays); i++) {
     const current = moment(today)
       .tz('Europe/Kyiv')
       .add(i * step, 'days')

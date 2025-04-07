@@ -28,9 +28,9 @@ export default async function telegramHandler(req, res) {
       await handleStartCommand(chatId, userName)
     }
 
-    if (body.message?.text === '/initial') {
-      await handleInitialCommand(userName)
-    }
+    // if (body.message?.text === '/initial') {
+    //   await handleInitialCommand(userName)
+    // }
 
     if (body.message?.text === '/check') {
       await handleCheckCommand(userName)
