@@ -29,7 +29,7 @@ const tomorrow = moment().add(2, 'day').format()
 // console.log('yesterday ', moment(yesterday).format('DD-MM-YYYY dddd')) //02-04-2025 Wednesday
 // console.log('diff ', getDaysRequestFromToday(tomorrow))
 
-const test = moment('08-04-2025', 'DD-MM-YYYY').format()
+const test = moment('15-04-2025', 'DD-MM-YYYY').format()
 
 // console.log('test ', test)
 console.log('getDaysFromToday ', getDaysFromToday(test))
