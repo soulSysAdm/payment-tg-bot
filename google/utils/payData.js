@@ -123,7 +123,7 @@ export const getDataByAlertRequest = (data) => {
   const dataByAllDate = getDataByAllDate(data)
   return dataByAllDate.filter(
     (item) =>
-      item?.[DAYS_UNTIL_PAYMENT_KEY] <= alertDay &&
+      item?.[DAYS_UNTIL_REQUEST_KEY] <= alertDay &&
       !getIsPendingOrCancel(item?.[IS_PENDING_KEY]),
   )
 }
