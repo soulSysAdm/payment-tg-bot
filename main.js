@@ -32,6 +32,10 @@ const tomorrow = moment().add(2, 'day').format()
 const test = moment('15-04-2025', 'DD-MM-YYYY').format()
 
 // console.log('test ', test)
-console.log('getDaysFromToday ', getDaysFromToday(test))
-console.log('getDaysRequestFromToday ', getDaysRequestFromToday(test))
-console.log('getDateByUnknownFormat ', getDateByUnknownFormat('06.04.2025'))
+// console.log('getDaysFromToday ', getDaysFromToday(test))
+const dayTest = '19-04-2025'
+const daysRequest = getDateByUnknownFormat(dayTest)
+const daysPayment = getDateByUnknownFormat(dayTest)
+console.log('daysPayment', getDaysFromToday(daysRequest))
+console.log('daysRequest ', getDaysRequestFromToday(daysPayment))
+// console.log('moment ', moment('').tz('Europe/Kyiv'))

@@ -26,18 +26,23 @@ import {
   getValidateNumber,
 } from './validateData.js'
 
+const getUkraineFormat = (dateStr, isToday) => {
+  if(isToday) return moment().tz('Europe/Kyiv')
+    return moment(dateStr).tz('Europe/Kyiv')
+}
+
 export const getDisplayDateWithDay = (date) => {
   if (!date) return ''
-  return moment(date).tz('Europe/Kyiv').format('DD-MM-YYYY, dddd')
+  return getUkraineFormat(date).format('DD-MM-YYYY, dddd')
 }
 
 export const getDisplayDate = (date) => {
   if (!date) return ''
-  return moment(date).tz('Europe/Kyiv').format('DD-MM-YYYY')
+  return getUkraineFormat(date).format('DD-MM-YYYY')
 }
 
 export const getTimeInUkraine = () => {
-  return moment().tz('Europe/Kyiv').format('DD.MM.YYYY, HH:mm:ss')
+  return getUkraineFormat(null, true).format('DD.MM.YYYY, HH:mm:ss')
 }
 
 export const delaySeconds = (second) => {
@@ -47,7 +52,7 @@ export const delaySeconds = (second) => {
 }
 
 const getClosestValidDate = (dateStr) => {
-  let date = moment(dateStr).tz('Europe/Kyiv')
+  let date = getUkraineFormat(dateStr)
   while (!daysPayment.includes(date.day())) {
     date = date.subtract(1, 'day')
   }
@@ -55,26 +60,28 @@ const getClosestValidDate = (dateStr) => {
 }
 
 export const getDaysFromToday = (dateStr) => {
-  const target = moment(dateStr).tz('Europe/Kyiv').startOf('day')
-  const today = moment().tz('Europe/Kyiv').startOf('day')
+  const target = getUkraineFormat(dateStr).startOf('day')
+  const today = getUkraineFormat(null, true).startOf('day')
   return target.diff(today, 'days')
 }
 
 export const getDaysRequestFromToday = (dateStr) => {
-  const target = moment(dateStr).tz('Europe/Kyiv').startOf('day')
-  const today = moment().tz('Europe/Kyiv').startOf('day')
+  const target = getUkraineFormat(dateStr).startOf('day')
+  const today = getUkraineFormat(null, true).startOf('day')
   const diffDays = target.diff(today, 'days')
   let count = 0
 
-  const step = diffDays >= 0 ? 1 : -1
+  if(diffDays <= 0) return diffDays + -1
+  const STEP = 1
 
-  for (let i = 1; i < Math.abs(diffDays); i++) {
-    const current = moment(today)
-      .tz('Europe/Kyiv')
-      .add(i * step, 'days')
+  console.log('STEP', STEP)
+  console.log('diffDays', diffDays)
+  for (let i = 1; i < diffDays; i++) {
+    const current = getUkraineFormat(today)
+      .add(i * STEP, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {
-      count += step
+      count += STEP
     }
   }
   return count
@@ -117,7 +124,7 @@ const getOffsetPaymentDayByYear = (payRepeat) => {
 }
 
 const getNextPaymentByMonth = ({ lastDatePayment, payRepeat }) => {
-  const start = moment(lastDatePayment)
+  const start = getUkraineFormat(lastDatePayment)
   let nextDate = start.clone()
 
   const offsetPaymentDay = getOffsetPaymentDayByMonth(payRepeat)
@@ -140,7 +147,7 @@ const getNextPaymentByMonth = ({ lastDatePayment, payRepeat }) => {
 }
 
 const getNextPaymentByYear = ({ lastDatePayment, payRepeat }) => {
-  const start = moment(lastDatePayment)
+  const start = getUkraineFormat(lastDatePayment)
   let nextDate = start.clone()
   const offsetPaymentDay = getOffsetPaymentDayByYear(payRepeat)
 
