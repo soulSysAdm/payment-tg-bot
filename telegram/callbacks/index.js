@@ -87,8 +87,8 @@ const handleCancelPayClick = async (callbackQuery, id, messageId, user) => {
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      // await editMessageReplyMarkup(item, null)
-      await deleteMessage(item)
+      await editMessageReplyMarkup(item, null)
+      // await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
         messageTelegram,
@@ -109,8 +109,8 @@ const handlePaidClick = async (callbackQuery, id, messageId, user) => {
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      // await editMessageReplyMarkup(item, null)
-      await deleteMessage(item)
+      await editMessageReplyMarkup(item, null)
+      // await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
         messageTelegram,
@@ -131,8 +131,8 @@ const handleCancelPaidClick = async (callbackQuery, id, messageId, user) => {
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      // await editMessageReplyMarkup(item, null)
-      await deleteMessage(item)
+      await editMessageReplyMarkup(item, null)
+      // await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
         messageTelegram,

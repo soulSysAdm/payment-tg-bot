@@ -76,8 +76,8 @@ export const getDaysRequestFromToday = (dateStr) => {
   if(diffDays <= 0) return diffDays + -1
   const STEP = 1
 
-  console.log('STEP', STEP)
-  console.log('diffDays', diffDays)
+  // console.log('STEP', STEP)
+  // console.log('diffDays', diffDays)
   for (let i = 1; i < diffDays; i++) {
     const current = getUkraineFormat(today).startOf('day')
     // const current = moment(TODAY, 'DD-MM-YYYY').tz('Europe/Kyiv').startOf('day')
