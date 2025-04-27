@@ -33,7 +33,7 @@ const test = moment('15-04-2025', 'DD-MM-YYYY').format()
 
 // console.log('test ', test)
 // console.log('getDaysFromToday ', getDaysFromToday(test))
-const dayTest = '19-04-2025'
+const dayTest = '05-05-2025'
 const daysRequest = getDateByUnknownFormat(dayTest)
 const daysPayment = getDateByUnknownFormat(dayTest)
 console.log('daysPayment', getDaysFromToday(daysRequest))

@@ -22,7 +22,7 @@ import { getDisplayDateWithDay } from '../../assets/dateFormat.js'
 
 export const getDataMessagesPending = (data) => {
   return data.map((item) => {
-    const text = `🦆 Утка/Гусь :) ${item?.[NICKNAME_ANSWERABLE_KEY]}\n💳 Проплата: ${item?.[NAME_KEY]}\n🪙 Сумма: ${item?.[COST_KEY]}\nЛогин: ${item?.[LOGIN_KEY]}\nОсталось дней до запроса: ${item?.[DAYS_UNTIL_REQUEST_KEY]}\nОсталось дней до проплаты: ${item?.[DAYS_UNTIL_PAYMENT_KEY]}\n🏂 Следующая проплата: ${getDisplayDateWithDay(item?.[NEXT_DATE_PAYMENT_KEY])}`
+    const text = `🦆 ${item?.[NICKNAME_ANSWERABLE_KEY]}\n💳 Проплата: ${item?.[NAME_KEY]}\n💲️ Сумма: ${item?.[COST_KEY]}\nЛогин: ${item?.[LOGIN_KEY]}\nОсталось дней до запроса: ${item?.[DAYS_UNTIL_REQUEST_KEY]}\nОсталось дней до проплаты: ${item?.[DAYS_UNTIL_PAYMENT_KEY]}\n🗓️ Следующая проплата: ${getDisplayDateWithDay(item?.[NEXT_DATE_PAYMENT_KEY])}`
     const id = getValidateNumber(item?.[ID_KEY])
     const idPay = PAY_PART_KEY + '_' + id
     const idCancelPay = CANCEL_PAY_PART_KEY + '_' + id
@@ -69,3 +69,5 @@ export const getDataMessageEmptyButtons = (item) => {
     },
   }
 }
+
+

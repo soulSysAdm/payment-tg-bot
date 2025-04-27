@@ -68,6 +68,8 @@ export const getDaysFromToday = (dateStr) => {
 export const getDaysRequestFromToday = (dateStr) => {
   const target = getUkraineFormat(dateStr).startOf('day')
   const today = getUkraineFormat(null, true).startOf('day')
+  // const TODAY = '28-04-2025'
+  // const today = moment(TODAY, 'DD-MM-YYYY').tz('Europe/Kyiv').startOf('day').format()
   const diffDays = target.diff(today, 'days')
   let count = 0
 
@@ -77,7 +79,8 @@ export const getDaysRequestFromToday = (dateStr) => {
   console.log('STEP', STEP)
   console.log('diffDays', diffDays)
   for (let i = 1; i < diffDays; i++) {
-    const current = getUkraineFormat(today)
+    const current = getUkraineFormat(today).startOf('day')
+    // const current = moment(TODAY, 'DD-MM-YYYY').tz('Europe/Kyiv').startOf('day')
       .add(i * STEP, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {

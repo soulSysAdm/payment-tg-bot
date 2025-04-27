@@ -40,6 +40,16 @@ const sendErrorMassage = async (message) => {
   }
 }
 
+const deleteMessage = async (item) => {
+  await axios.post(
+    `https://api.telegram.org/bot${TELEGRAM_TOKEN}/deleteMessage`,
+    {
+      chat_id: item[CHAT_ID_KEY],
+      message_id: item[MESSAGE_ID_KEY],
+    }
+  )
+}
+
 const editMessageReplyMarkup = async (item, id) => {
   const data = id
     ? { ...getDataMessagePay(item, id) }
@@ -53,78 +63,85 @@ const editMessageReplyMarkup = async (item, id) => {
 
 const handlePayClick = async (callbackQuery, id, messageId, user) => {
   try {
-    const message = `➡️ Сделать запрос | нажал "${user}" в ${getTimeInUkraine()}`
+    const messageTelegram = `➡️ Сделать запрос | нажал "${user}"`
+    const messageSheet = `${messageTelegram} в ${getTimeInUkraine()}`
     const redisData = await getRedisData(id)
     for (const item of redisData) {
       await editMessageReplyMarkup(item, id)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
-        message,
+        messageTelegram,
         null,
         item[MESSAGE_ID_KEY],
       )
     }
-    await googleSheetUpdateByPay(id, message)
+    await googleSheetUpdateByPay(id, messageSheet)
   } catch (e) {
     await sendErrorMassage(e.message)
   }
 }
 
 const handleCancelPayClick = async (callbackQuery, id, messageId, user) => {
-  const message = `❌ Отменить | (Вместо Оплатить) нажал "${user}" в ${getTimeInUkraine()}`
+  const messageTelegram = `❌ Отменить | (Вместо Оплатить) нажал "${user}"`
+  const messageSheet = `${messageTelegram} в ${getTimeInUkraine()}`
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      await editMessageReplyMarkup(item, null)
+      // await editMessageReplyMarkup(item, null)
+      await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
-        message,
+        messageTelegram,
         null,
         item[MESSAGE_ID_KEY],
       )
     }
     await delRedisData(id)
-    await googleSheetUpdateByCancelPay(id, message)
+    await googleSheetUpdateByCancelPay(id, messageSheet)
   } catch (e) {
     await sendErrorMassage(e.message)
   }
 }
 
 const handlePaidClick = async (callbackQuery, id, messageId, user) => {
-  const message = `✅ Оплачено | нажал "${user}" в ${getTimeInUkraine()}`
+  const messageTelegram = `✅ Оплачено | нажал "${user}"`
+  const messageSheet = `${messageTelegram} в ${getTimeInUkraine()}`
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      await editMessageReplyMarkup(item, null)
+      // await editMessageReplyMarkup(item, null)
+      await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
-        message,
+        messageTelegram,
         null,
         item[MESSAGE_ID_KEY],
       )
     }
     await delRedisData(id)
-    await googleSheetUpdateByPaid(id, message)
+    await googleSheetUpdateByPaid(id, messageSheet)
   } catch (e) {
     await sendErrorMassage(e.message)
   }
 }
 
 const handleCancelPaidClick = async (callbackQuery, id, messageId, user) => {
-  const message = `❌ Отменить | (Вместо Оплачено) нажал "${user}" в ${getTimeInUkraine()}`
+  const messageTelegram = `❌ Отменить | (Вместо Оплачено) нажал "${user}"`
+  const messageSheet = `${messageTelegram} в ${getTimeInUkraine()}`
   const redisData = await getRedisData(id)
   try {
     for (const item of redisData) {
-      await editMessageReplyMarkup(item, null)
+      // await editMessageReplyMarkup(item, null)
+      await deleteMessage(item)
       await sendTelegramMessage(
         item[CHAT_ID_KEY],
-        message,
+        messageTelegram,
         null,
         item[MESSAGE_ID_KEY],
       )
     }
     await delRedisData(id)
-    await googleSheetUpdateByCancelPaid(id, message)
+    await googleSheetUpdateByCancelPaid(id, messageSheet)
   } catch (e) {
     await sendErrorMassage(e.message)
   }
