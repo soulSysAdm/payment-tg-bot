@@ -1,5 +1,6 @@
 import moment from 'moment-timezone'
 import {getDaysFromToday, getDaysRequestFromToday, getDateByUnknownFormat} from './assets/dateFormat.js'
+import { getDataByPayRequest, getDataSheetPay, readSheet } from './google/index.js'
 // import {daysPayment} from './globals/index.js'
 
 // export const daysPayment = [1, 2, 3, 4]
@@ -36,6 +37,20 @@ const test = moment('15-04-2025', 'DD-MM-YYYY').format()
 const dayTest = '05-05-2025'
 const daysRequest = getDateByUnknownFormat(dayTest)
 const daysPayment = getDateByUnknownFormat(dayTest)
-console.log('daysPayment', getDaysFromToday(daysRequest))
-console.log('daysRequest ', getDaysRequestFromToday(daysPayment))
-console.log('moment ', moment('').tz('Europe/Kyiv'), typeof moment('').tz('Europe/Kyiv'))
+// console.log('daysPayment', getDaysFromToday(daysRequest))
+// console.log('daysRequest ', getDaysRequestFromToday(daysPayment))
+// console.log('moment ', moment('').tz('Europe/Kyiv'), typeof moment('').tz('Europe/Kyiv'))
+
+const initial = async () => {
+  const sheetData = await readSheet()
+  // console.log("sheetData ", sheetData)
+  // console.log("sheetData[0] ", sheetData[0])
+  const dataByPay = getDataByPayRequest(sheetData)
+  console.log("dataByPay ", dataByPay)
+  console.log("dataByPay[0] ", dataByPay[0])
+  const dataByPaySheet = getDataSheetPay(dataByPay)
+  console.log("dataByPaySheet ", dataByPaySheet)
+  console.log("dataByPaySheet[0] ", dataByPaySheet[0])
+}
+
+initial()

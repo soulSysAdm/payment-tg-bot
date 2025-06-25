@@ -49,7 +49,7 @@ const getSheetDataArray = (rows) => {
     headers.forEach((key, i) => {
       obj[key] = row[i] ?? null
     })
-    obj[ID_KEY] = rowIndex + 2
+    // obj[ID_KEY] = rowIndex + 2
     obj._sheetMeta = {
       row: rowIndex + 2, // с учётом заголовка
       cols: headers.reduce((acc, key, i) => {

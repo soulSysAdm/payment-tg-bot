@@ -20,6 +20,7 @@ export const ID_KEY = 'id'
 export const SHEET_META_KEY = '_sheetMeta'
 export const ROW_KEY = 'row'
 export const COLS_KEY = 'cols'
+export const IS_CHANGE_ID = 'isChangeId'
 
 //Pay Repeat (types)
 export const EVERY_MONTH_TYPE_KEY = 'каждый месяц'

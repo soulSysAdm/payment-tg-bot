@@ -68,9 +68,10 @@ const sendTelegramMessageByRequest = async (dataByAlert) => {
 
 export async function repeatSheet() {
   const sheetData = await readSheet()
-  const dataByAlert = getDataByAlertRequest(sheetData)
-  const dataPending = getDataByPendingRequest(sheetData)
   const dataByPay = getDataByPayRequest(sheetData)
+  const dataByAlert = getDataByAlertRequest(dataByPay)
+  const dataPending = getDataByPendingRequest(dataByPay)
+
   if (!dataByAlert.length) {
     await sendTelegramMessageByPending(dataPending)
   } else {
