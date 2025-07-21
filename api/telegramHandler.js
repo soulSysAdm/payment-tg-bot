@@ -12,6 +12,7 @@ import {
   isPrivateChat,
   leaveChat,
 } from '../telegram/utils/checkGroup.js'
+import { GROUP_CHAT_ID } from '../globals/index.js'
 
 export default async function telegramHandler(req, res) {
   console.log('🔥 Webhook вызван в', getTimeInUkraine())
@@ -34,6 +35,11 @@ export default async function telegramHandler(req, res) {
       body?.message?.from?.first_name ||
       body?.callback_query?.from?.username ||
       body?.callback_query?.from?.first_name
+
+    console.log('🔥 userId', userId)
+    console.log('🔥 chatId', chatId)
+    console.log('🔥 type', type)
+    console.log('🔥 userName', userName)
 
     if (!isAllowedGroup(chatId)) {
       //Выход с группы
