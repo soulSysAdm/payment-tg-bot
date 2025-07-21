@@ -1,8 +1,8 @@
 import { sendTelegramMessage } from '../index.js'
-import { allowedUsers } from '../../globals/index.js'
+import {allowedUsersId} from '../../globals/index.js'
 
 export async function isAuthorizedUser(userId, chatId, userName) {
-  const authorized = userId && allowedUsers.includes(userId)
+  const authorized = userId && allowedUsersId.includes(userId)
   if (!authorized && chatId) {
     await sendTelegramMessage(
       chatId,

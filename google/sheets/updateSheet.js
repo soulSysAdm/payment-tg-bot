@@ -1,15 +1,5 @@
 import { google } from 'googleapis'
-import { spreadsheetId, range } from '../../globals/index.js'
-
-let GOOGLE_CREDENTIALS
-
-if (process.env.VERCEL) {
-  GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS)
-} else {
-  const dotenv = await import('dotenv')
-  dotenv.config()
-  GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS)
-}
+import { range, GOOGLE_CREDENTIALS, GOOGLE_SHEET_ID } from '../../globals/index.js'
 
 const auth = new google.auth.GoogleAuth({
   credentials: GOOGLE_CREDENTIALS,
@@ -25,7 +15,7 @@ export async function updateSingleCell() {
   const newValue = '✅ Оплачено'
 
   const res = await sheets.spreadsheets.values.update({
-    spreadsheetId,
+    spreadsheetId: GOOGLE_SHEET_ID,
     range: rangeSingle,
     valueInputOption: 'USER_ENTERED',
     requestBody: {
@@ -59,7 +49,7 @@ export async function updateMultipleSpecificCells(requests) {
   const sheets = google.sheets({ version: 'v4', auth: client })
 
   const res = await sheets.spreadsheets.values.batchUpdate({
-    spreadsheetId,
+    spreadsheetId: GOOGLE_SHEET_ID,
     requestBody: {
       valueInputOption: 'USER_ENTERED',
       data: requests,

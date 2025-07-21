@@ -11,6 +11,12 @@ export default async function telegramHandler(req, res) {
   console.log('🔥 Webhook вызван в', getTimeInUkraine())
   try {
     const body = req.body
+    console.log('🔥 body', body)
+    console.log('🔥 body.message.chat.id', body.message.chat.id)
+    console.log(
+      '🔥 body.callback_query.message.chat.id',
+      body.callback_query.message.chat.id,
+    )
     const userId = body?.message?.from?.id || body?.callback_query?.from?.id
     const chatId =
       body?.message?.chat?.id || body?.callback_query?.message?.chat?.id

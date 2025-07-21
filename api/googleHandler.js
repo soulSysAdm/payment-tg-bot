@@ -1,7 +1,4 @@
-// === 📦 Google Sheets Trigger Endpoint ===
-import { allowedUsers } from '../globals/index.js'
 import { delaySeconds, getTimeInUkraine } from '../assets/dateFormat.js'
-import { sendTelegramMessage } from '../telegram/index.js'
 import { repeatSheet } from '../google/index.js'
 
 export default async function googleHandler(req, res) {

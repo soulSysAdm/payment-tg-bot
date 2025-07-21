@@ -5,7 +5,6 @@ import {
   sendTelegramMessage,
 } from '../index.js'
 import { getTimeInUkraine } from '../../assets/dateFormat.js'
-import { allowedUsers } from '../../globals/index.js'
 import {
   CANCEL_PAID_PART_KEY,
   CANCEL_PAY_PART_KEY,
@@ -22,19 +21,10 @@ import {
   googleSheetUpdateByPay,
 } from '../../google/sheets/telegramUpdateSheet.js'
 import { getRedisData, delRedisData } from '../../libs/redis.js'
-
-let TELEGRAM_TOKEN
-
-if (process.env.VERCEL) {
-  TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
-} else {
-  const dotenv = await import('dotenv')
-  dotenv.config()
-  TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
-}
+import { allowedUsersId, TELEGRAM_TOKEN } from '../../globals/index.js'
 
 const sendErrorMassage = async (message) => {
-  for (const chatId of allowedUsers) {
+  for (const chatId of allowedUsersId) {
     const messageTelegram = `Ошибка ${message}"`
     await sendTelegramMessage(chatId, messageTelegram)
   }
@@ -46,7 +36,7 @@ const deleteMessage = async (item) => {
     {
       chat_id: item[CHAT_ID_KEY],
       message_id: item[MESSAGE_ID_KEY],
-    }
+    },
   )
 }
 

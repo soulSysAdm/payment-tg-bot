@@ -11,7 +11,7 @@ import {
   getDataMessagesPending,
   sendTelegramMessage,
 } from '../../telegram/index.js'
-import { alertDay, allowedUsers } from '../../globals/index.js'
+import { alertDay, allowedUsersId } from '../../globals/index.js'
 import { delaySeconds } from '../../assets/dateFormat.js'
 import {
   CHAT_ID_KEY,
@@ -32,7 +32,7 @@ const sendTelegramMessageByPending = async (dataPending) => {
   } else {
     message = `Ближайшие "${alertDay}" дня Нет запросов в ожидании. Дополнительных запросов на проплату Нет!`
   }
-  for (const chatId of allowedUsers) {
+  for (const chatId of allowedUsersId) {
     await sendTelegramMessage(chatId, message)
   }
 }
@@ -41,7 +41,7 @@ const sendTelegramMessageByRequest = async (dataByAlert) => {
   const telegramMessages = getDataMessagesPending(dataByAlert)
   const redisData = {}
   for (const message of telegramMessages) {
-    for (const chatId of allowedUsers) {
+    for (const chatId of allowedUsersId) {
       const messageId = await sendTelegramMessage(chatId, message[TEXT_KEY], {
         [INLINE_KEYBOARD_KEY]: message[INLINE_KEYBOARD_KEY],
       })

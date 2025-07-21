@@ -1,19 +1,20 @@
 import { Redis } from '@upstash/redis'
 import { REDIS_PAYMENT_PART_KEY, TYPE_BUTTONS_KEY } from '../constants/index.js'
 import { getValidateArray } from '../assets/validateData.js'
+import { UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN } from '../globals/index.js'
 
-let UPSTASH_REDIS_REST_URL
-let UPSTASH_REDIS_REST_TOKEN
-
-if (process.env.VERCEL) {
-  UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL
-  UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
-} else {
-  const dotenv = await import('dotenv')
-  dotenv.config()
-  UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL
-  UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
-}
+// let UPSTASH_REDIS_REST_URL
+// let UPSTASH_REDIS_REST_TOKEN
+//
+// if (process.env.VERCEL) {
+//   UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL
+//   UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+// } else {
+//   const dotenv = await import('dotenv')
+//   dotenv.config()
+//   UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL
+//   UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+// }
 
 export const redis = new Redis({
   url: UPSTASH_REDIS_REST_URL,

@@ -1,14 +1,6 @@
 import axios from 'axios'
+import {TELEGRAM_TOKEN } from '../../globals/index.js'
 
-let TELEGRAM_TOKEN
-
-if (process.env.VERCEL) {
-  TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
-} else {
-  const dotenv = await import('dotenv')
-  dotenv.config()
-  TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
-}
 
 export async function sendTelegramMessage(
   chatId,

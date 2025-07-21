@@ -1,11 +1,11 @@
 import { sendTelegramMessage } from '../index.js'
 import { delaySeconds } from '../../assets/dateFormat.js'
 import { setInitialDataSheet } from '../../google/index.js'
-import { allowedUsers } from '../../globals/index.js'
+import { allowedUsersId } from '../../globals/index.js'
 
 export async function handleInitialCommand(user) {
   try {
-    for (const chatId of allowedUsers) {
+    for (const chatId of allowedUsersId) {
       await sendTelegramMessage(
         chatId,
         `**${user}** Использовал команду "/initial" что бы устоновить изначальные данные по датам проплаты!`,
@@ -14,7 +14,7 @@ export async function handleInitialCommand(user) {
     }
     await setInitialDataSheet()
     await delaySeconds(1)
-    for (const chatId of allowedUsers) {
+    for (const chatId of allowedUsersId) {
       await sendTelegramMessage(chatId, `Изначальная установка таблицы прошла успешно`)
       await delaySeconds(1)
     }
@@ -28,7 +28,7 @@ export async function handleInitialCommand(user) {
     //   ],
     // })
   } catch (error) {
-    for (const chatId of allowedUsers) {
+    for (const chatId of allowedUsersId) {
       await sendTelegramMessage(chatId, `❌ Ошибка в изначальной установки таблицы`)
     }
     console.error('❌ Ошибка в команде /initial:', error.message)
