@@ -5,7 +5,13 @@ export function isAllowedGroup(chatId) {
   // const type =
   //   body?.message?.chat?.type || body?.callback_query?.message?.chat?.type
   // return type === 'private'
-  return chatId && String(chatId) === GROUP_CHAT_ID
+  const result = chatId && String(chatId) === GROUP_CHAT_ID
+  console.log('result ', result)
+  console.log(
+    'String(chatId) === GROUP_CHAT_ID ',
+    String(chatId) === GROUP_CHAT_ID,
+  )
+  return result
 }
 
 export async function isPrivateChat(type, chatId) {
