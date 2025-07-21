@@ -44,11 +44,14 @@ export default async function telegramHandler(req, res) {
 
     if (!isAllowedGroup(chatId)) {
       //Выход с группы
-
+      console.log('isAllowedGroup')
       await leaveChat(body)
       res.status(200).send('⛔️ Добавлен бот в запрещенную группу')
       return
     }
+
+    const isPrivate = type === 'private'
+    console.log('isPrivate 1', isPrivate)
 
     if (await isPrivateChat(type, chatId)) {
       await sendTelegramMessage(

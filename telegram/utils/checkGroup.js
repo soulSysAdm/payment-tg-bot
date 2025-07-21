@@ -10,6 +10,7 @@ export function isAllowedGroup(chatId) {
 
 export async function isPrivateChat(type, chatId) {
   const isPrivate = type === 'private'
+  console.log('isPrivate 2', isPrivate)
   if (isPrivate) {
     await sendTelegramMessage(chatId, `🙅 Бот работает только в группе`)
     console.log('❌ Бот вызван в личке — игнорируем')
