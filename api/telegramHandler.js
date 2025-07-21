@@ -19,11 +19,11 @@ export default async function telegramHandler(req, res) {
   try {
     const body = req.body
     console.log('🔥 body', body)
-    console.log('🔥 body.message.chat.id', body.message?.chat.id)
-    console.log(
-      '🔥 body.callback_query.message.chat.id',
-      body.callback_query?.message?.chat.id,
-    )
+    // console.log('🔥 body.message.chat.id', body.message?.chat.id)
+    // console.log(
+    //   '🔥 body.callback_query.message.chat.id',
+    //   body.callback_query?.message?.chat.id,
+    // )
 
     const userId = body?.message?.from?.id || body?.callback_query?.from?.id
     const chatId =
@@ -36,10 +36,10 @@ export default async function telegramHandler(req, res) {
       body?.callback_query?.from?.username ||
       body?.callback_query?.from?.first_name
 
-    console.log('🔥 userId', userId)
+    // console.log('🔥 userId', userId)
     console.log('🔥 chatId', chatId)
-    console.log('🔥 type', type)
-    console.log('🔥 userName', userName)
+    // console.log('🔥 type', type)
+    // console.log('🔥 userName', userName)
     console.log('🔥 GROUP_CHAT_ID', GROUP_CHAT_ID)
 
     if (await isPrivateChat(type, chatId)) {
