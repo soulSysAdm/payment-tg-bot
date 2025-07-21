@@ -42,14 +42,6 @@ export default async function telegramHandler(req, res) {
     console.log('🔥 userName', userName)
     console.log('🔥 GROUP_CHAT_ID', GROUP_CHAT_ID)
 
-    if (!isAllowedGroup(chatId)) {
-      //Выход с группы
-      console.log('isAllowedGroup')
-      await leaveChat(body)
-      res.status(200).send('⛔️ Добавлен бот в запрещенную группу')
-      return
-    }
-
     const isPrivate = type === 'private'
     console.log('isPrivate 1', isPrivate)
 
@@ -62,6 +54,14 @@ export default async function telegramHandler(req, res) {
         `❌ Бот вызван в личке. chatId - ${chatId}, userName - ${userName}`,
       )
       return res.status(200).send('🚫 Бот работает только в группе')
+    }
+
+    if (!isAllowedGroup(chatId)) {
+      //Выход с группы
+      console.log('isAllowedGroup')
+      await leaveChat(body)
+      res.status(200).send('⛔️ Добавлен бот в запрещенную группу')
+      return
     }
 
     // if (!(await isAuthorizedUser(userId, chatId, userName))) {
