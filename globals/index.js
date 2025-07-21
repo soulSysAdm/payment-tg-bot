@@ -4,7 +4,7 @@ let GOOGLE_SHEET_ID = ''
 let UPSTASH_REDIS_REST_URL = ''
 let UPSTASH_REDIS_REST_TOKEN = ''
 let TELEGRAM_TOKEN = ''
-let GROUP_CHAT_ID = ''
+let GROUP_CHAT_ID = 0
 
 if (process.env.VERCEL) {
   ALLOWED_USERS = JSON.parse(process.env.ALLOWED_USERS || '[]')
@@ -13,7 +13,7 @@ if (process.env.VERCEL) {
   UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL || ''
   UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || ''
   TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || ''
-  GROUP_CHAT_ID = process.env.GROUP_CHAT_ID || ''
+  GROUP_CHAT_ID = Number(process.env.GROUP_CHAT_ID || '0')
 } else {
   const dotenv = await import('dotenv')
   dotenv.config()
@@ -23,7 +23,7 @@ if (process.env.VERCEL) {
   UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL || ''
   UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || ''
   TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || ''
-  GROUP_CHAT_ID = process.env.GROUP_CHAT_ID || ''
+  GROUP_CHAT_ID = Number(process.env.GROUP_CHAT_ID || '0')
 }
 
 const allowedUsersId = Array.isArray(ALLOWED_USERS)

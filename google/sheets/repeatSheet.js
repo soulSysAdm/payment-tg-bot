@@ -11,7 +11,7 @@ import {
   getDataMessagesPending,
   sendTelegramMessage,
 } from '../../telegram/index.js'
-import { alertDay, allowedUsersId } from '../../globals/index.js'
+import { alertDay, allowedUsersId, GROUP_CHAT_ID } from '../../globals/index.js'
 import { delaySeconds } from '../../assets/dateFormat.js'
 import {
   CHAT_ID_KEY,
@@ -23,7 +23,7 @@ import {
   TEXT_KEY,
   TYPE_BUTTONS_KEY,
 } from '../../constants/index.js'
-import { setRedisData } from '../../libs/redis.js'
+// import { setRedisData } from '../../libs/redis.js'
 
 const sendTelegramMessageByPending = async (dataPending) => {
   let message = ''
@@ -32,38 +32,65 @@ const sendTelegramMessageByPending = async (dataPending) => {
   } else {
     message = `Ближайшие "${alertDay}" дня Нет запросов в ожидании. Дополнительных запросов на проплату Нет!`
   }
-  for (const chatId of allowedUsersId) {
-    await sendTelegramMessage(chatId, message)
-  }
+  // for (const chatId of allowedUsersId) {
+  //   await sendTelegramMessage(chatId, message)
+  // }
+  await sendTelegramMessage(GROUP_CHAT_ID, message)
 }
 
 const sendTelegramMessageByRequest = async (dataByAlert) => {
   const telegramMessages = getDataMessagesPending(dataByAlert)
-  const redisData = {}
+  // const redisData = {}
   for (const message of telegramMessages) {
-    for (const chatId of allowedUsersId) {
-      const messageId = await sendTelegramMessage(chatId, message[TEXT_KEY], {
+    //Этот Вариант заменяю на Вариант ниже так как у меня будет не много личек , а теперь все сообщения в группе
+    // for (const chatId of allowedUsersId) {
+    //   const messageId = await sendTelegramMessage(chatId, message[TEXT_KEY], {
+    //     [INLINE_KEYBOARD_KEY]: message[INLINE_KEYBOARD_KEY],
+    //   })
+    //   if (messageId) {
+    //     const redisKey = `${REDIS_PAYMENT_PART_KEY}_${message[ID_KEY]}`
+    //
+    //     if (!redisData[redisKey]) {
+    //       redisData[redisKey] = []
+    //     }
+    //
+    //     redisData[redisKey].push(
+    //       JSON.stringify({
+    //         [CHAT_ID_KEY]: chatId,
+    //         [MESSAGE_ID_KEY]: messageId,
+    //       }),
+    //     )
+    //     await delaySeconds(0.1)
+    //   }
+    // }
+    //Заменяю на этот вариант - но его нужно переделать
+    const messageId = await sendTelegramMessage(
+      GROUP_CHAT_ID,
+      message[TEXT_KEY],
+      {
         [INLINE_KEYBOARD_KEY]: message[INLINE_KEYBOARD_KEY],
-      })
-      if (messageId) {
-        const redisKey = `${REDIS_PAYMENT_PART_KEY}_${message[ID_KEY]}`
+      },
+    )
+    if (messageId) {
+      // const redisKey = `${REDIS_PAYMENT_PART_KEY}_${message[ID_KEY]}`
+      //
+      // redisData[String(messageId)] = message[ID_KEY]
 
-        if (!redisData[redisKey]) {
-          redisData[redisKey] = []
-        }
+      // if (!redisData[redisKey]) {
+      //   redisData[redisKey] = []
+      // }
 
-        redisData[redisKey].push(
-          JSON.stringify({
-            [CHAT_ID_KEY]: chatId,
-            [MESSAGE_ID_KEY]: messageId,
-          }),
-        )
-        await delaySeconds(0.1)
-      }
+      // redisData[redisKey].push(
+      //   JSON.stringify({
+      //     [CHAT_ID_KEY]: GROUP_CHAT_ID,
+      //     [MESSAGE_ID_KEY]: messageId,
+      //   }),
+      // )
+      await delaySeconds(0.1)
     }
   }
 
-  await setRedisData(redisData)
+  // await setRedisData(redisData)
 }
 
 export async function repeatSheet() {

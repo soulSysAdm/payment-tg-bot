@@ -42,9 +42,6 @@ export default async function telegramHandler(req, res) {
     console.log('🔥 userName', userName)
     console.log('🔥 GROUP_CHAT_ID', GROUP_CHAT_ID)
 
-    const isPrivate = type === 'private'
-    console.log('isPrivate 1', isPrivate)
-
     if (await isPrivateChat(type, chatId)) {
       await sendTelegramMessage(
         GROUP_CHAT_ID,
@@ -67,11 +64,10 @@ export default async function telegramHandler(req, res) {
     // if (!(await isAuthorizedUser(userId, chatId, userName))) {
     //   return res.status(200).send('🚫 Доступ запрещён')
     // }
-    //asdasdasd
 
-    if (body.message?.text === '/start') {
-      await handleStartCommand(chatId, userName)
-    }
+    // if (body.message?.text === '/start') {
+    //   await handleStartCommand(chatId, userName)
+    // }
 
     // if (body.message?.text === '/initial') {
     //   await handleInitialCommand(userName)
