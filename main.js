@@ -19,6 +19,7 @@ import {
   range,
   daysPayment,
   alertDay,
+  GROUP_CHAT_ID,
 } from './globals/index.js'
 
 // export const daysPayment = [1, 2, 3, 4]
@@ -81,3 +82,4 @@ console.log('UPSTASH_REDIS_REST_TOKEN ', UPSTASH_REDIS_REST_TOKEN)
 console.log('range ', range)
 console.log('daysPayment ', daysPayment)
 console.log('alertDay ', alertDay)
+console.log('GROUP_CHAT_ID ', GROUP_CHAT_ID)

@@ -4,8 +4,14 @@ import {
   handleCallbackQuery,
   handleStartCommand,
   isAuthorizedUser,
+  sendTelegramMessage,
 } from '../telegram/index.js'
 import { handleCheckCommand } from '../telegram/index.js'
+import {
+  isAllowedGroup,
+  isPrivateChat,
+  leaveChat,
+} from '../telegram/utils/checkGroup.js'
 
 export default async function telegramHandler(req, res) {
   console.log('🔥 Webhook вызван в', getTimeInUkraine())
@@ -17,18 +23,40 @@ export default async function telegramHandler(req, res) {
       '🔥 body.callback_query.message.chat.id',
       body.callback_query?.message?.chat.id,
     )
+
     const userId = body?.message?.from?.id || body?.callback_query?.from?.id
     const chatId =
       body?.message?.chat?.id || body?.callback_query?.message?.chat?.id
+    const type =
+      body?.message?.chat?.type || body?.callback_query?.message?.chat?.type
     const userName =
       body?.message?.from?.username ||
       body?.message?.from?.first_name ||
       body?.callback_query?.from?.username ||
       body?.callback_query?.from?.first_name
 
-    if (!(await isAuthorizedUser(userId, chatId, userName))) {
-      return res.status(200).send('🚫 Доступ запрещён')
+    if (!isAllowedGroup(chatId)) {
+      //Выход с группы
+
+      await leaveChat(body)
+      res.status(200).send('⛔️ Добавлен бот в запрещенную группу')
+      return
     }
+
+    if (await isPrivateChat(type, chatId)) {
+      await sendTelegramMessage(
+        GROUP_CHAT_ID,
+        `❌ Бот вызван в личке. chatId - ${chatId}, userName - ${userName}`,
+      )
+      console.log(
+        `❌ Бот вызван в личке. chatId - ${chatId}, userName - ${userName}`,
+      )
+      return res.status(200).send('🚫 Бот работает только в группе')
+    }
+
+    // if (!(await isAuthorizedUser(userId, chatId, userName))) {
+    //   return res.status(200).send('🚫 Доступ запрещён')
+    // }
 
     if (body.message?.text === '/start') {
       await handleStartCommand(chatId, userName)
