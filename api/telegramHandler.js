@@ -40,6 +40,7 @@ export default async function telegramHandler(req, res) {
     console.log('🔥 chatId', chatId)
     console.log('🔥 type', type)
     console.log('🔥 userName', userName)
+    console.log('🔥 GROUP_CHAT_ID', GROUP_CHAT_ID)
 
     if (!isAllowedGroup(chatId)) {
       //Выход с группы
@@ -63,6 +64,7 @@ export default async function telegramHandler(req, res) {
     // if (!(await isAuthorizedUser(userId, chatId, userName))) {
     //   return res.status(200).send('🚫 Доступ запрещён')
     // }
+    //asdasdasd
 
     if (body.message?.text === '/start') {
       await handleStartCommand(chatId, userName)
