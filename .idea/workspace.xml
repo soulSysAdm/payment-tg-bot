@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/googleHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/googleHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/globals/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/globals/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/google/sheets/readSheet.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/sheets/readSheet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/google/sheets/repeatSheet.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/sheets/repeatSheet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/google/sheets/updateSheet.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/sheets/updateSheet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/redis.js" beforeDir="false" afterPath="$PROJECT_DIR$/libs/redis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram/callbacks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/telegram/callbacks/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram/commands/check.js" beforeDir="false" afterPath="$PROJECT_DIR$/telegram/commands/check.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram/commands/initial.js" beforeDir="false" afterPath="$PROJECT_DIR$/telegram/commands/initial.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram/utils/checkUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/telegram/utils/checkUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/telegram/utils/sendTelegram.js" beforeDir="false" afterPath="$PROJECT_DIR$/telegram/utils/sendTelegram.js" afterDir="false" />
-    </list>
+    <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +33,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Projects/sims-bot",
+    "last_opened_file_path": "C:/Projects/payment-bot/payment-bot/telegram/utils",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -61,11 +47,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\payment-bot\payment-bot\telegram\utils" />
       <recent name="C:\Users\oi\Desktop\payment-bot\google\sheets" />
       <recent name="C:\Users\oi\Desktop\payment-bot\api" />
       <recent name="C:\Users\oi\Desktop\payment-bot\utils" />
       <recent name="C:\Users\oi\Desktop\payment-bot\assets" />
-      <recent name="C:\Users\oi\Desktop\payment-bot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\oi\Desktop\payment-bot\google\sheets" />
@@ -116,7 +102,7 @@
       <workItem from="1748176199817" duration="189000" />
       <workItem from="1750834643124" duration="13776000" />
       <workItem from="1751812892304" duration="117000" />
-      <workItem from="1753089371187" duration="2576000" />
+      <workItem from="1753089371187" duration="16816000" />
     </task>
     <servers />
   </component>
@@ -130,6 +116,18 @@
           <url>file://$PROJECT_DIR$/google/sheets/initialSheet.js</url>
           <line>7</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/main.js</url>
+          <line>70</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/api/telegramHandler.js</url>
+          <line>16</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -77,7 +77,10 @@ export default async function telegramHandler(req, res) {
       await handleCheckCommand(userName)
     }
 
+    console.log('body.callback_query BEFORE')
+
     if (body.callback_query) {
+      console.log('body.callback_query IN')
       await handleCallbackQuery(body.callback_query, chatId)
     }
 
