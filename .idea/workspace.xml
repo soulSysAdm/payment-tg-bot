@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google/utils/payData.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/utils/payData.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,14 +39,14 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Projects/payment-bot/payment-bot/telegram/utils",
+    "last_opened_file_path": "/Users/macbookpro/Projects/wwa/payment-tg-bot",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "C:\\Projects\\payment-bot\\payment-bot\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -110,6 +111,7 @@
       <workItem from="1753089371187" duration="16816000" />
       <workItem from="1756280926682" duration="3000" />
       <workItem from="1756280932534" duration="23000" />
+      <workItem from="1756281004539" duration="1445000" />
     </task>
     <servers />
   </component>

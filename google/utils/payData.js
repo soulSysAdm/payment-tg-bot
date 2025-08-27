@@ -9,7 +9,8 @@ import {
   COMMENTS_KEY,
   DAYS_UNTIL_PAYMENT_KEY,
   DAYS_UNTIL_REQUEST_KEY,
-  ID_KEY, IS_CHANGE_ID,
+  ID_KEY,
+  IS_CHANGE_ID,
   IS_PENDING_KEY,
   LAST_DATE_PAYMENT_KEY,
   NEXT_DATE_PAYMENT_KEY,
@@ -44,7 +45,7 @@ const getFilteredDataByPay = (data) => {
     .filter(
       (item) =>
         getValidateString(item?.[PAY_KEY]).trim().toLowerCase() ===
-        TRUE_TYPE_KEY &&
+          TRUE_TYPE_KEY &&
         getValidateString(item?.[LAST_DATE_PAYMENT_KEY]).trim(),
     )
     .map((item) => ({
@@ -101,15 +102,18 @@ export const getDataByAllDate = (data) => {
 }
 
 const getDataById = (data) => {
-  const allIds = data.map((item) => item[ID_KEY]).filter(id => typeof id === 'number')
+  const allIds = data
+    .map((item) => item[ID_KEY])
+    .filter((id) => typeof id === 'number')
   let lastId = 1
-  if(allIds.length){
+  if (allIds.length) {
     lastId = Math.max(...allIds)
   }
   return data.map((item, index) => {
     const id = getValidateNumber(item?.[ID_KEY])
-    const isChangeId = id === 0
-    const formattedId = isChangeId ? id + index + 1 + lastId : id
+    const isChangeId = !id
+    if (isChangeId) lastId++
+    const formattedId = isChangeId ? lastId : id
     return {
       ...item,
       [IS_CHANGE_ID]: isChangeId,
@@ -148,7 +152,10 @@ export const getDataByAlertRequest = (data) => {
 export const getDataByPayRequest = (data) => {
   const dataByAllDate = getDataByAllDate(data)
   const dataByAllDateAndId = getDataById(dataByAllDate)
-  return dataByAllDateAndId.filter((item) => !getIsCancel(item?.[IS_PENDING_KEY]))
+  console.log(dataByAllDateAndId.map((item) => item[ID_KEY]))
+  return dataByAllDateAndId.filter(
+    (item) => !getIsCancel(item?.[IS_PENDING_KEY]),
+  )
 }
 
 export const getDataByPendingRequest = (data) => {
