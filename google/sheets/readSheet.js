@@ -8,7 +8,11 @@ import {
   getValidateArray,
   getValidateBoolean,
 } from '../../assets/validateData.js'
-import { range, GOOGLE_CREDENTIALS, GOOGLE_SHEET_ID } from '../../globals/index.js'
+import {
+  range,
+  GOOGLE_CREDENTIALS,
+  GOOGLE_SHEET_ID,
+} from '../../globals/index.js'
 
 // let GOOGLE_CREDENTIALS
 // let GOOGLE_SHEET_ID
@@ -35,6 +39,7 @@ const columnToLetter = (col) => {
     letter = String.fromCharCode(temp + 65) + letter
     col = (col - temp - 1) / 26
   }
+  console.log('letter')
   return letter
 }
 
