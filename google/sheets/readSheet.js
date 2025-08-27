@@ -39,7 +39,6 @@ const columnToLetter = (col) => {
     letter = String.fromCharCode(temp + 65) + letter
     col = (col - temp - 1) / 26
   }
-  console.log('letter')
   return letter
 }
 

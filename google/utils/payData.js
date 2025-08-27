@@ -102,17 +102,17 @@ export const getDataByAllDate = (data) => {
 }
 
 const getDataById = (data) => {
-  const allIds = data
-    .map((item) => item[ID_KEY])
-    .filter((id) => typeof id === 'number')
+  const allIds = data.map((item) => getValidateNumber(item[ID_KEY]))
   let lastId = 1
   if (allIds.length) {
     lastId = Math.max(...allIds)
   }
+  console.log('lastId BEFORE ', lastId)
   return data.map((item, index) => {
     const id = getValidateNumber(item?.[ID_KEY])
     const isChangeId = !id
     if (isChangeId) lastId++
+    console.log('lastId IN ', lastId)
     const formattedId = isChangeId ? lastId : id
     return {
       ...item,
@@ -152,7 +152,10 @@ export const getDataByAlertRequest = (data) => {
 export const getDataByPayRequest = (data) => {
   const dataByAllDate = getDataByAllDate(data)
   const dataByAllDateAndId = getDataById(dataByAllDate)
-  console.log(dataByAllDateAndId.map((item) => item[ID_KEY]))
+  console.log(
+    'all ID_KEY',
+    dataByAllDateAndId.map((item) => item[ID_KEY]),
+  )
   return dataByAllDateAndId.filter(
     (item) => !getIsCancel(item?.[IS_PENDING_KEY]),
   )

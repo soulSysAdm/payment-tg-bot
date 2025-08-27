@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google/sheets/readSheet.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/sheets/readSheet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/google/utils/payData.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/utils/payData.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +111,7 @@
       <workItem from="1753089371187" duration="16816000" />
       <workItem from="1756280926682" duration="3000" />
       <workItem from="1756280932534" duration="23000" />
-      <workItem from="1756281004539" duration="1445000" />
+      <workItem from="1756281004539" duration="1997000" />
     </task>
     <servers />
   </component>
