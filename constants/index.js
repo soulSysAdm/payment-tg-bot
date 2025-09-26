@@ -13,7 +13,7 @@ export const COST_KEY = 'cost'
 export const PAY_KEY = 'pay'
 export const IS_PENDING_KEY = 'is_pending'
 export const COMMENTS_KEY = 'comments'
-export const NICKNAME_ANSWERABLE_KEY = 'nickname_answerable'
+export const THIS_NEXT_WEEK_PAY_KEY = 'this_next_week_pay'
 
 //Keys additional xlsx
 export const ID_KEY = 'id'
@@ -60,3 +60,7 @@ export const TYPE_BUTTONS_KEY = 'type'
 
 //Redis Keys
 export const REDIS_PAYMENT_PART_KEY = 'payment'
+
+//Next and This Month Pay
+export const NEXT_WEEK_VALUE = 'NEXT'
+export const THIS_WEEK_VALUE = 'THIS'

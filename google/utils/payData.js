@@ -18,6 +18,7 @@ import {
   NICKNAME_ANSWERABLE_KEY,
   PAY_KEY,
   RANGE_KEY,
+  THIS_NEXT_WEEK_PAY_KEY,
   TRUE_TYPE_KEY,
   VALUES_KEY,
 } from '../../constants/index.js'
@@ -26,6 +27,7 @@ import {
   getDisplayDateWithDay,
   getNextDateFormatToLastDate,
   getNextPayment,
+  getThisAndNextWeekPayText,
 } from '../../assets/dateFormat.js'
 import { getRangeCell } from './rangeCell.js'
 import { updateMultipleSpecificCells } from '../sheets/updateSheet.js'
@@ -90,6 +92,7 @@ export const getDataByAllDate = (data) => {
       lastDatePayment,
     } = getNextPayment(item)
 
+    const thisOrNextWeekPay = getThisAndNextWeekPayText(nextDatePayment)
     return {
       ...item,
       [NEXT_DATE_PAYMENT_KEY]: nextDatePayment || '',
@@ -97,6 +100,7 @@ export const getDataByAllDate = (data) => {
       [DAYS_UNTIL_PAYMENT_KEY]: daysUntilPayment ?? -1,
       [DAYS_UNTIL_REQUEST_KEY]: daysUntilRequest ?? -1,
       [LAST_DATE_PAYMENT_KEY]: lastDatePayment || '',
+      [THIS_NEXT_WEEK_PAY_KEY]: thisOrNextWeekPay || '',
     }
   })
 }
@@ -107,14 +111,12 @@ const getDataById = (data) => {
   if (allIds.length) {
     lastId = Math.max(...allIds)
   }
-  console.log('lastId BEFORE ', lastId)
+
   return data.map((item, index) => {
     const id = getValidateNumber(item?.[ID_KEY])
     const isChangeId = !id
     if (isChangeId) {
-      console.log('lastId IN ', lastId)
       lastId++
-      console.log('lastId OUT ', lastId)
     }
     const formattedId = isChangeId ? lastId : id
     return {

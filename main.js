@@ -73,13 +73,3 @@ const initial = async () => {
 }
 
 // initial()
-console.log('allowedUsersId ', allowedUsersId)
-console.log('TELEGRAM_TOKEN ', TELEGRAM_TOKEN)
-console.log('GOOGLE_CREDENTIALS ', GOOGLE_CREDENTIALS)
-console.log('GOOGLE_SHEET_ID ', GOOGLE_SHEET_ID)
-console.log('UPSTASH_REDIS_REST_URL ', UPSTASH_REDIS_REST_URL)
-console.log('UPSTASH_REDIS_REST_TOKEN ', UPSTASH_REDIS_REST_TOKEN)
-console.log('range ', range)
-console.log('daysPayment ', daysPayment)
-console.log('alertDay ', alertDay)
-console.log('GROUP_CHAT_ID ', GROUP_CHAT_ID)

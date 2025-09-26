@@ -15,6 +15,8 @@ import {
   PAY_REPEAT_KEY,
   LAST_DATE_PAYMENT_KEY,
   EVERY_6_MONTH_TYPE_KEY,
+  NEXT_WEEK_VALUE,
+  THIS_WEEK_VALUE,
 } from '../constants/index.js'
 import { daysPayment } from '../globals/index.js'
 
@@ -27,8 +29,32 @@ import {
 } from './validateData.js'
 
 const getUkraineFormat = (dateStr, isToday) => {
-  if(isToday) return moment().tz('Europe/Kyiv')
-    return moment(dateStr).tz('Europe/Kyiv')
+  if (isToday) return moment().tz('Europe/Kyiv')
+  return moment(dateStr).tz('Europe/Kyiv')
+}
+
+export const getThisAndNextWeekPayText = (isoDate) => {
+  if (!isoDate) return ''
+  const date = getUkraineFormat(isoDate) // Дата, которую проверяем
+  const today = getUkraineFormat(null, true) // Текущая дата для привязки недели
+
+  // Текущая неделя (с понедельника по воскресенье)
+  const startOfThisWeek = today.clone().startOf('isoWeek')
+  const endOfThisWeek = today.clone().endOf('isoWeek')
+
+  // Следующая неделя
+  const startOfNextWeek = startOfThisWeek.clone().add(1, 'week')
+  const endOfNextWeek = endOfThisWeek.clone().add(1, 'week')
+
+  if (date.isBetween(startOfThisWeek, endOfThisWeek, undefined, '[]')) {
+    return THIS_WEEK_VALUE // включительно []
+  }
+
+  if (date.isBetween(startOfNextWeek, endOfNextWeek, undefined, '[]')) {
+    return NEXT_WEEK_VALUE
+  }
+
+  return ''
 }
 
 export const getDisplayDateWithDay = (date) => {
@@ -73,14 +99,15 @@ export const getDaysRequestFromToday = (dateStr) => {
   const diffDays = target.diff(today, 'days')
   let count = 0
 
-  if(diffDays <= 0) return diffDays + -1
+  if (diffDays <= 0) return diffDays + -1
   const STEP = 1
 
   // console.log('STEP', STEP)
   // console.log('diffDays', diffDays)
   for (let i = 1; i < diffDays; i++) {
-    const current = getUkraineFormat(today).startOf('day')
-    // const current = moment(TODAY, 'DD-MM-YYYY').tz('Europe/Kyiv').startOf('day')
+    const current = getUkraineFormat(today)
+      .startOf('day')
+      // const current = moment(TODAY, 'DD-MM-YYYY').tz('Europe/Kyiv').startOf('day')
       .add(i * STEP, 'days')
     const weekday = current.isoWeekday() // Пн=1, Вс=7
     if (daysPayment.includes(weekday)) {

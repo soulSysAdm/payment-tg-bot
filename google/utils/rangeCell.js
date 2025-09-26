@@ -5,13 +5,16 @@ import {
 import {
   COLS_KEY,
   DAYS_UNTIL_PAYMENT_KEY,
-  DAYS_UNTIL_REQUEST_KEY, ID_KEY, IS_CHANGE_ID,
+  DAYS_UNTIL_REQUEST_KEY,
+  ID_KEY,
+  IS_CHANGE_ID,
   IS_PENDING_KEY,
   NEXT_DATE_PAYMENT_KEY,
   NEXT_DATE_REQUEST_KEY,
   RANGE_KEY,
   ROW_KEY,
   SHEET_META_KEY,
+  THIS_NEXT_WEEK_PAY_KEY,
   TRUE_TYPE_KEY,
   VALUES_KEY,
 } from '../../constants/index.js'
@@ -84,17 +87,24 @@ export const getDataSheetPay = (data) => {
     [RANGE_KEY]: getRangeCell(item, DAYS_UNTIL_REQUEST_KEY),
     [VALUES_KEY]: [[getValidateNumber(item?.[DAYS_UNTIL_REQUEST_KEY])]],
   }))
-  const IDRequestArray = data.filter(item => item?.[IS_CHANGE_ID]).map((item) => ({
-    [RANGE_KEY]: getRangeCell(item, ID_KEY),
-    [VALUES_KEY]: [[getValidateNumber(item?.[ID_KEY])]],
+  const thisNextWeekPay = data.map((item) => ({
+    [RANGE_KEY]: getRangeCell(item, THIS_NEXT_WEEK_PAY_KEY),
+    [VALUES_KEY]: [[getValidateString(item?.[THIS_NEXT_WEEK_PAY_KEY])]],
   }))
+  const IDRequestArray = data
+    .filter((item) => item?.[IS_CHANGE_ID])
+    .map((item) => ({
+      [RANGE_KEY]: getRangeCell(item, ID_KEY),
+      [VALUES_KEY]: [[getValidateNumber(item?.[ID_KEY])]],
+    }))
   // console.log(daysUntilPaymentArray.map((item) => item[VALUES_KEY]))
   const fullData = [
     ...nextDatePaymentArray,
     ...nextDateRequestArray,
     ...daysUntilPaymentArray,
     ...daysUntilRequestArray,
-    ...IDRequestArray
+    ...thisNextWeekPay,
+    ...IDRequestArray,
   ]
   return getFilterDataByRange(fullData)
 }
