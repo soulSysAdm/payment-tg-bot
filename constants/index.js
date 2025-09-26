@@ -13,6 +13,7 @@ export const COST_KEY = 'cost'
 export const PAY_KEY = 'pay'
 export const IS_PENDING_KEY = 'is_pending'
 export const COMMENTS_KEY = 'comments'
+export const NICKNAME_ANSWERABLE_KEY = 'nickname_answerable'
 export const THIS_NEXT_WEEK_PAY_KEY = 'this_next_week_pay'
 
 //Keys additional xlsx

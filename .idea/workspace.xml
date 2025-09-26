@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/dateFormat.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/dateFormat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/constants/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/google/sheets/repeatSheet.js" beforeDir="false" afterPath="$PROJECT_DIR$/google/sheets/repeatSheet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-    </list>
+    <list default="true" id="6854e7f3-56b3-4bf0-ad57-192df1461f76" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,7 +110,7 @@
       <workItem from="1756280932534" duration="23000" />
       <workItem from="1756281004539" duration="3433000" />
       <workItem from="1757660282703" duration="23000" />
-      <workItem from="1758868106092" duration="4109000" />
+      <workItem from="1758868106092" duration="4932000" />
     </task>
     <servers />
   </component>
