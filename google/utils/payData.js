@@ -92,7 +92,13 @@ export const getDataByAllDate = (data) => {
       lastDatePayment,
     } = getNextPayment(item)
 
-    const thisOrNextWeekPay = getThisAndNextWeekPayText(nextDatePayment)
+    const thisOrNextWeekPayByNextPayment =
+      getThisAndNextWeekPayText(nextDatePayment)
+    const thisOrNextWeekPayByLastPayment =
+      getThisAndNextWeekPayText(lastDatePayment)
+    const thisOrNextWeekPay = thisOrNextWeekPayByNextPayment
+      ? thisOrNextWeekPayByNextPayment
+      : thisOrNextWeekPayByLastPayment
     return {
       ...item,
       [NEXT_DATE_PAYMENT_KEY]: nextDatePayment || '',
